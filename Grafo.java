@@ -1,4 +1,4 @@
-package com.mycompany.graphs;
+package com.mycompany.grafos;
 
 
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ public class Grafo {
         vertices = new ArrayList<>();
         arestas = new ArrayList<>();
     }
+    
     boolean comparaValorVertice(int valor, List<Vertice> lista_vertices){
         for(Vertice v : lista_vertices){
             if(v.getValor()==valor) return true;
@@ -30,11 +31,12 @@ public class Grafo {
     void adicionarVertice(int valor){
         vertices.add(new Vertice(valor));
     }
+    
     void removerVertice (int valor){
         vertices.remove(new Vertice(valor));
-        arestas.stream().filter(a -> a.getVertice1().getValor()==valor||a
-                .getVertice2().getValor()==valor)
-                .forEach(a -> arestas.remove(a));
+        for(int i=0;i<arestas.size();i++){
+            if(arestas.get(i).getVertice1().getValor()==valor||arestas.get(i).getVertice2().getValor()==valor) arestas.remove(i);
+        }
     }
     boolean procurarVertice (int valor){
         return comparaValorVertice(valor, vertices);
@@ -47,10 +49,9 @@ public class Grafo {
     }
     
     void removerAresta (int valor_1, int valor_2){
-        Vertice v1 = new Vertice(valor_1);
-        Vertice v2 = new Vertice(valor_2);
-        arestas.stream().filter(a -> a.getVertice1()==v1&&a.getVertice2()==v2)
-                .forEach(a -> arestas.remove(a));
+        for(int i=0;i<arestas.size();i++){
+            if(arestas.get(i).getVertice1().getValor()==valor_1&&arestas.get(i).getVertice2().getValor()==valor_2) arestas.remove(i);
+        }
     }
     
     boolean procurarAresta(int valor_1, int valor_2){
@@ -67,6 +68,7 @@ public class Grafo {
         }
         return adjacentes;
     }
+    
     int verticeGrau(int valor){
         Vertice v = new Vertice(valor);
         return (int) arestas.stream().filter(a -> a.getVertice1()==v || a.getVertice2()==v)
@@ -103,8 +105,6 @@ public class Grafo {
         return true;
     }
     
-    
-    
     List<Integer> verticeConexo(Vertice v, List<Integer> visitados){
         if(visitados==null)visitados = new ArrayList<>();
         visitados.add(v.getValor());
@@ -112,14 +112,12 @@ public class Grafo {
         for(int i=adjacentes.size()-1;i>=0;i--){
             if(visitados.contains(adjacentes.get(i).getValor())) {
                adjacentes.remove(i);
-               System.out.println("visitados: "+visitados.size());
             }
         }
         if(adjacentes.isEmpty()) return visitados;
         for(Vertice vertice : adjacentes){
             visitados = verticeConexo(vertice,visitados);
         }
-        System.out.println("chego");
         return visitados;
     }
     
@@ -135,6 +133,16 @@ public class Grafo {
         }
         return matriz_adajcencia;
     }
+    public boolean verificaEuler(){
+        int contagem_impar=0;
+        if(verificaConexo()){
+            for(Vertice v : vertices){
+                if(verticeGrau(v.getValor())%2!=0) contagem_impar++;
+            }
+            return contagem_impar==2||contagem_impar==0;
+        }
+        return false;
+    }
     
     public static Grafo criarGrafo() {
         Grafo grafo = new Grafo();
@@ -142,21 +150,10 @@ public class Grafo {
         grafo.adicionarVertice(2);
         grafo.adicionarVertice(3);
         grafo.adicionarVertice(4);
-       // grafo.adicionarVertice(5);
         grafo.adicionarAresta(1,2);
-        //grafo.adicionarAresta(2,3);
-        grafo.adicionarAresta(3,4);
-        grafo.adicionarAresta(4,1);
-        /*
         grafo.adicionarAresta(2,3);
-        grafo.adicionarAresta(4,3);
-        grafo.adicionarAresta(2,5);
-        grafo.adicionarAresta(1,5);*/
+        grafo.adicionarAresta(3,4);
         return grafo;
     }
     
-   /* 
-    boolean checarAresta(){
-        return 
-    }*/
 }

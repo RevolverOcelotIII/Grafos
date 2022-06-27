@@ -1,18 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.graphs;
+
+package com.mycompany.grafos;
 
 public class Aresta {
     
     private Vertice vertice1;
     private Vertice vertice2;
-    private String nome;
+    private int peso;
+
+    public int getPeso() {
+        return peso;
+    }
+
+    public void setPeso(int peso) {
+        this.peso = peso;
+    }
   
     public Aresta(Vertice v1, Vertice v2){
         this.vertice1 = v1;
         this.vertice2 = v2;
+    }
+    public Aresta(Vertice v1, Vertice v2, int peso){
+        this.vertice1 = v1;
+        this.vertice2 = v2;
+        this.peso = peso;
     }
 
     public Vertice getVertice1() {
@@ -31,13 +41,7 @@ public class Aresta {
         this.vertice2 = vertice2;
     }
     
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setValor(String nome) {
-        this.nome = nome;
-    }
+    
     @Override
     public String toString() {
         return "Aresta de conexão: "+this.getVertice1().getValor()+" - "+this.getVertice2().getValor();
