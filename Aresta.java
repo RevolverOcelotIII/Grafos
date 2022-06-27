@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.grafos1;
+package com.mycompany.graphs;
 
 public class Aresta {
     
@@ -38,6 +38,9 @@ public class Aresta {
     public void setValor(String nome) {
         this.nome = nome;
     }
-    
+    @Override
+    public String toString() {
+        return "Aresta de conexão: "+this.getVertice1().getValor()+" - "+this.getVertice2().getValor();
+    }
 
 }
